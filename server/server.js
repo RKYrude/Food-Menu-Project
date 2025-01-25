@@ -25,6 +25,7 @@ const db = new pg.Client({
     ssl: {
         rejectUnauthorized: false,
     },
+    host: `okxvkdyqqsdiupvfvdxd.supabase.co`
 });
 db.connect()
     .then(() => {
