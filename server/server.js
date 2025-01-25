@@ -74,10 +74,7 @@ async function loadDishes() {
             return acc;
         }, {});
 
-        dishes = Object.values(groupedData);  
-        
-        console.log("inside loadDishes() :- ",dishes);
-        
+        dishes = Object.values(groupedData);          
 
     } catch (err) {
         console.error(err);
@@ -93,7 +90,6 @@ loadDishes();
 
 app.get("/getdishes", async (req, res) => {
     loadDishes();
-    console.log("inside /getdishes :- ",dishes);
     
     res.status(200).json(dishes);
 });
