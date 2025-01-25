@@ -90,6 +90,7 @@ loadDishes();
 // });
 
 app.get("/getdishes", async (req, res) => {
+    loadDishes();
     console.log(dishes);
     
     res.status(200).json(dishes);
