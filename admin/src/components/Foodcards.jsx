@@ -1,5 +1,6 @@
+import Deleteconfirm from "./Deleteconfirm";
 import { useEffect, useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
@@ -37,8 +38,6 @@ export default function Foodcards(props) {
     async function ConfirmDelete() {
         const deletionId = props.item.id;
 
-        console.log(deletionId);
-
         try{
             await axios.post(`${import.meta.env.VITE_API_URL}:3000/deleteitem`, {deletionId});
             props.fetchData();
@@ -66,6 +65,14 @@ export default function Foodcards(props) {
 
     return (
         <div>
+
+            {showDelConfirm &&
+                <Deleteconfirm
+                    item={props.item}
+                    handleDeleteClick={handleDeleteClick}
+                    ConfirmDelete={ConfirmDelete}
+                />
+            }
 
             {props.adminpg &&
                 <input style={{ display: "none" }} type="number" name="dishid" value={props.id} readOnly={true} />

@@ -7,7 +7,7 @@ function Landing() {
 
   const handleClick = () => {
     setTimeout(() => {
-      navigate('/home'); 
+      navigate('/admin');
     }, 130); 
   };
 
@@ -20,7 +20,7 @@ function Landing() {
 
       <img src="/images/food_landing.png" alt="" />
 
-      <button onClick={handleClick}>See Menu</button>
+      <button onClick={handleClick}>Admin Panel</button>
       
     </div>
   )

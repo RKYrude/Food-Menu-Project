@@ -5,11 +5,12 @@ import "../styles/additem.scss";
 import Varietyinput from "../components/Varietyinput";
 import Buttonforimage from "../components/buttons/Buttonforimage";
 import Buttonforsaving from "../components/buttons/Buttonforsaving";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
-function Additem() {
+function Edititem() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [preview, setPreview] = useState("https://placehold.co/600x400?text=No%20Image%20\nSelected");
     const [errors, setErrors] = useState({});
@@ -17,6 +18,19 @@ function Additem() {
     const [submitted, setSubmitted] = useState(null);
 
     const [base64Image, setBase64Image] = useState("");
+    const dish = location.state;
+
+    
+    
+
+    const [varietyItems, setvarietyItems] = useState(dish.itemvariant);
+    const [formData, setFormData] = useState({
+        itemimage: dish.itemimage,
+        itemname: dish.itemname,
+        itemtype: dish.itemtype,
+        itemvariant: varietyItems,
+        deletedVariantIDs: [],
+    });
 
     let message;
     if (submitted === true) {
@@ -42,40 +56,37 @@ function Additem() {
                     color: "red"
                 }}
             >
-                ERROR: Failed to Save Dish!!
+                ERROR: Failed to Update Dish!!
             </p>
         );
     }
 
+    useEffect(() => {
+        const binaryData = dish.itemimage.data;        
 
-    const [varietyItems, setvarietyItems] = useState([{
-        id: uuidv4(),
-        variantName: "",
-        variantPrice: ""
-    }]);
+        // Convert binary data to Base64
+        const base64 = btoa(
+            binaryData.map((byte) => String.fromCharCode(byte)).join("")
+        );
 
-    const [formData, setFormData] = useState({
-        itemimage: "",
-        itemname: "",
-        itemtype: "",
-        itemvariant: varietyItems,
-    });
+        setBase64Image(`data:image/png;base64,${base64}`);
 
-
+    }, [dish]);
 
 
     // Functtitons
-
     function handleImageChange(event) {
         const file = event.target.files[0];
+
         if (file) {
+
             const reader = new FileReader();
 
             reader.onload = () => {
-
                 setPreview(reader.result);
                 setBase64Image("");
             };
+
             reader.readAsDataURL(file);
 
             setFormData((prevData) => ({
@@ -96,12 +107,14 @@ function Additem() {
             }
             ]
         );
-
     }
+
     function handleVariantDelete(idToDelete) {
         setvarietyItems(
             (prevItems) => prevItems.filter((item) => item.id !== idToDelete)
         );
+
+        typeof(idToDelete) == "number" && formData.deletedVariantIDs.push(idToDelete);
     }
 
     function handleChange(event) {
@@ -123,17 +136,19 @@ function Additem() {
                 item.id == id ? { ...item, [name]: value } : item
             )
         );
+        
     }
     useEffect(() => {
         setFormData((prevData) => ({
             ...prevData,
             itemvariant: varietyItems,
         }));
+
     }, [varietyItems]);
 
 
     //Form Validation and Submition
-    function validateForm() {
+    function validateForm() {        
         const newErrors = {};
 
         if (!formData.itemimage) newErrors.itemimage = "*Item Image is required";
@@ -141,7 +156,7 @@ function Additem() {
         if (!formData.itemtype) newErrors.itemtype = "*Choose Item type";
 
         for (let i = 0; i < formData.itemvariant.length; i++) {
-            if (!formData.itemvariant[i].variantName.trim() || !formData.itemvariant[i].variantPrice.trim()) {
+            if (!formData.itemvariant[i].variantName.trim() || !formData.itemvariant[i].variantPrice) {
                 newErrors.itemvarprice = "*Vaient or price can't be empty";
 
                 break;
@@ -159,18 +174,22 @@ function Additem() {
 
             setIsSubmitting(true);
 
+            formDataToSend.append("id", dish.id);
             formDataToSend.append("itemimage", formData.itemimage);
             formDataToSend.append("itemname", formData.itemname);
             formDataToSend.append("itemtype", formData.itemtype);
             formDataToSend.append("itemvariant", JSON.stringify(formData.itemvariant));
+            formDataToSend.append("deletedVariantIDs", JSON.stringify(formData.deletedVariantIDs));
+            
+           
 
 
             try {
 
-                const response = await axios.post(`${import.meta.env.vite_api_url}:3000/addnewitem`, formDataToSend, {
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}:3000/editolditem`, formDataToSend, {
                     headers: {
                         "Content-Type": "multipart/form-data",
-                    },
+                    }
                 });
 
                 console.log("Success:", response.data.message);
@@ -180,8 +199,9 @@ function Additem() {
                 setTimeout(() => {
                     setSubmitted(null);
                     navigate(-1)
-                }, 1000)
+                }, 1000);
 
+                
             } catch (err) {
                 console.error("Error:", err);
                 setSubmitted(false);
@@ -193,7 +213,7 @@ function Additem() {
 
     return (
         <div className="additem">
-            <h1>Add Food Item</h1>
+            <h1>Edit Food Item</h1>
             <form action="/addnewitem">
                 <section className="imgcont">
                     <div className="imgholder" >
@@ -219,7 +239,7 @@ function Additem() {
                 <section className="itemnamecont">
                     <div>
                         <label>Item Name</label>
-                        <input onChange={handleChange} name="itemname" type="text" />
+                        <input onChange={handleChange} name="itemname" type="text" value={formData.itemname} />
                         {errors.itemname && <p style={{ color: "red" }}>{errors.itemname}</p>}
                     </div>
 
@@ -228,7 +248,7 @@ function Additem() {
                         <div className="typecont">
                             {/* Veg Option */}
                             <label>
-                                <input onChange={handleChange} type="radio" name="itemtype" value="veg" />
+                                <input onChange={handleChange} type="radio" name="itemtype" checked={formData.itemtype === "veg"} value="veg" />
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
                                         <rect x="0" y="0" width="24" height="24" fill="white" rx="7" ry="7" />
@@ -240,7 +260,7 @@ function Additem() {
 
                             {/* Non-Veg Option */}
                             <label>
-                                <input onChange={handleChange} type="radio" name="itemtype" value="nonveg" />
+                                <input onChange={handleChange} type="radio" name="itemtype" checked={formData.itemtype === "nonveg"} value="nonveg" />
 
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
@@ -278,7 +298,6 @@ function Additem() {
                 </section>
 
                 <Buttonforsaving
-                    page="add"
                     handleSave={handleSave}
                     isSubmitting={isSubmitting}
                 />
@@ -293,4 +312,4 @@ function Additem() {
     );
 }
 
-export default Additem;
+export default Edititem;

@@ -1,4 +1,4 @@
-import "../styles/home.scss/";
+import "../styles/admin.scss/";
 import SearchBar from "../components/headers/Searchbar";
 import Filter from "../components/headers/Filter";
 import Foodcards from "../components/Foodcards";
@@ -64,9 +64,9 @@ function Admin() {
         let apiURL = "";
 
         if (apiParams.toString()) {
-            apiURL = `${import.meta.env.vite_api_url}:3000/searchdishes?${apiParams}`;
+            apiURL = `${import.meta.env.VITE_API_URL}:3000/searchdishes?${apiParams}`;
         } else {
-            apiURL = `${import.meta.env.vite_api_url}:3000/getdishes`;
+            apiURL = `${import.meta.env.VITE_API_URL}:3000/getdishes`;
         }
 
         try {

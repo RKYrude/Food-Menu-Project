@@ -193,7 +193,7 @@ app.post("/editolditem", upload.single("itemimage"), async (req, res) => {
     try {
         const { id, itemname, itemtype } = req.body;
         const itemvariant = JSON.parse(req.body.itemvariant || "[]");
-        const deletedVariantIDs = JSON.parse(req.body.zdeletedVariantIDs) || "[]";
+        const deletedVariantIDs = JSON.parse(req.body.deletedVariantIDs) || "[]";
         let webpBuffer = null;
 
         if (deletedVariantIDs.length > 0) {
@@ -267,5 +267,3 @@ app.post("/deleteitem", async (req, res) => {
 app.listen(PORT, "10.5.56.152", () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
-
-
