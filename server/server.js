@@ -19,14 +19,21 @@ const clientBuildPath = path.join(__dirname, "../client/dist");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+
 const db = new pg.Client({
-    user: "postgres",
-    host: process.env.DATABASE_HOST,
-    database: process.env.DATABASE,
-    password: process.env.DATABASE_PASSWORD,
-    port: 5432,
+    connectionString: process.env.DATABASE_URL, // Set this in Render's environment variables section
+    ssl: {
+        rejectUnauthorized: false, // For secure connections in hosted environments like Render
+    },
 });
-db.connect();
+
+db.connect()
+    .then(() => {
+        console.log("Connected to Supabase Hosted Database successfully");
+    })
+    .catch((err) => {
+        console.error("Connection error", err.stack);
+    });
 
 let dishes = [];
 
@@ -68,7 +75,7 @@ async function loadDishes() {
             return acc;
         }, {});
 
-        dishes = Object.values(groupedData);
+        dishes = Object.values(groupedData);        
 
     } catch (err) {
         console.error(err);
@@ -77,12 +84,14 @@ async function loadDishes() {
 }
 loadDishes();
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(clientBuildPath, 'index.html'));
-//   // res.sendFile("../client/index.html");
-// });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+    // res.sendFile("../client/index.html");
+});
 
 app.get("/getdishes", async (req, res) => {
+    console.log(dishes);
+    
     res.status(200).json(dishes);
 });
 
@@ -94,7 +103,7 @@ app.get("/searchdishes", async (req, res) => {
     let searchMatch = JSON.parse(JSON.stringify(dishes));
     // let searchMatch = JSON.parse(dishes);
 
-    if (searchWord) {        
+    if (searchWord) {
         searchMatch = searchMatch.filter(dish =>
             dish.itemname.toLowerCase().includes(searchWord.toLowerCase())
         );
@@ -110,9 +119,9 @@ app.get("/searchdishes", async (req, res) => {
             );
         }
     }
-    
+
     if (priceOrder) {
-        
+
         let sortedItemVariant;
 
         searchMatch = searchMatch.map(item => {
@@ -154,7 +163,7 @@ app.post("/addnewitem", upload.single("itemimage"), async (req, res) => {
             req.file.mimetype = "image/webp"
             req.file.size = Buffer.byteLength(webpBuffer);
 
-        }else{
+        } else {
             webpBuffer = req.file.buffer
         }
 
@@ -221,7 +230,7 @@ app.post("/editolditem", upload.single("itemimage"), async (req, res) => {
             );
         }
 
-        
+
 
         for (let i = 0; i < itemvariant.length; i++) {
             if (typeof itemvariant[i].id === "number") {
@@ -264,6 +273,6 @@ app.post("/deleteitem", async (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, "10.5.56.152", () => {
+app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
