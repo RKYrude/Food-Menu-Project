@@ -12,18 +12,18 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const clientBuildPath = path.join(__dirname, "../client/dist");
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// const clientBuildPath = path.join(__dirname, "../client/dist");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 
 const db = new pg.Client({
-    connectionString: process.env.DATABASE_URL, // Set this in Render's environment variables section
+    connectionString: process.env.DATABASE_URL,
     ssl: {
-        rejectUnauthorized: false, // For secure connections in hosted environments like Render
+        rejectUnauthorized: false,
     },
 });
 
@@ -38,8 +38,8 @@ db.connect()
 let dishes = [];
 
 app.use(cors({
-    origin: "*", // Allows all origins
-    methods: ["GET", "POST"], // Specify allowed methods
+    origin: "*",
+    methods: ["GET", "POST"],
 }));
 app.use(express.static(clientBuildPath));
 app.use(express.json());
@@ -101,7 +101,6 @@ app.get("/searchdishes", async (req, res) => {
     const foodType = req.query.type;
 
     let searchMatch = JSON.parse(JSON.stringify(dishes));
-    // let searchMatch = JSON.parse(dishes);
 
     if (searchWord) {
         searchMatch = searchMatch.filter(dish =>
