@@ -1,6 +1,6 @@
 import express, { response } from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
+// import path from 'path';
+// import { fileURLToPath } from 'url';
 import cors from "cors"
 import multer from 'multer';
 import sharp from 'sharp';
@@ -10,7 +10,7 @@ import dotenv from "dotenv"
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
@@ -26,13 +26,12 @@ const db = new pg.Client({
         rejectUnauthorized: false,
     },
 });
-
 db.connect()
     .then(() => {
         console.log("Connected to Supabase Hosted Database successfully");
     })
     .catch((err) => {
-        console.error("Connection error", err.stack);
+        console.error("Database Connection error", err.stack);
     });
 
 let dishes = [];
