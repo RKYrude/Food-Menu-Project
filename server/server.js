@@ -84,10 +84,10 @@ async function loadDishes() {
 }
 loadDishes();
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-    // res.sendFile("../client/index.html");
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(clientBuildPath, 'index.html'));
+//     // res.sendFile("../client/index.html");
+// });
 
 app.get("/getdishes", async (req, res) => {
     console.log(dishes);
@@ -274,5 +274,5 @@ app.post("/deleteitem", async (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Server running at PORT:${PORT}`);
 });

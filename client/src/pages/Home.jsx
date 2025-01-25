@@ -63,6 +63,7 @@ function Home() {
         let apiURL = "";
 
         if (apiParams.toString()) {
+            // apiURL = `${import.meta.env.VITE_API_URL}:3000/searchdishes?${apiParams}`;
             apiURL = `${import.meta.env.VITE_API_URL}:3000/searchdishes?${apiParams}`;
         } else {
             apiURL = `${import.meta.env.VITE_API_URL}:3000/getdishes`;
