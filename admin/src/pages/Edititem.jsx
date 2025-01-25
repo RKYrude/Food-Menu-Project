@@ -186,7 +186,7 @@ function Edititem() {
 
             try {
 
-                const response = await axios.post(`${import.meta.env.VITE_API_URL}:3000/editolditem`, formDataToSend, {
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/editolditem`, formDataToSend, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     }

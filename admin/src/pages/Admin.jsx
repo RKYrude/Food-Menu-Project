@@ -64,9 +64,9 @@ function Admin() {
         let apiURL = "";
 
         if (apiParams.toString()) {
-            apiURL = `${import.meta.env.VITE_API_URL}:3000/searchdishes?${apiParams}`;
+            apiURL = `${import.meta.env.VITE_API_URL}/searchdishes?${apiParams}`;
         } else {
-            apiURL = `${import.meta.env.VITE_API_URL}:3000/getdishes`;
+            apiURL = `${import.meta.env.VITE_API_URL}/getdishes`;
         }
 
         try {

@@ -167,7 +167,7 @@ function Additem() {
 
             try {
 
-                const response = await axios.post(`${import.meta.env.VITE_API_URL}:3000/addnewitem`, formDataToSend, {
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/addnewitem`, formDataToSend, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
