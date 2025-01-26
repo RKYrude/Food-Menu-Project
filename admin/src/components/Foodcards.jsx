@@ -39,7 +39,7 @@ export default function Foodcards(props) {
         const deletionId = props.item.id;
 
         try{
-            await axios.post(`${import.meta.env.VITE_API_URL}:3000/deleteitem`, {deletionId});
+            await axios.post(`${import.meta.env.VITE_API_URL}/deleteitem`, {deletionId});
             props.fetchData();
             setShowDelConfirm(false);
         }catch(err){
