@@ -1,6 +1,4 @@
-import express, { response } from 'express';
-// import path from 'path';
-// import { fileURLToPath } from 'url';
+import express from 'express';
 import cors from "cors"
 import multer from 'multer';
 import sharp from 'sharp';
@@ -11,10 +9,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// const clientBuildPath = path.join(__dirname, "../client/dist");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -40,7 +34,7 @@ app.use(cors({
     origin: "*",
     methods: ["GET", "POST"],
 }));
-// app.use(express.static(clientBuildPath));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -82,11 +76,6 @@ async function loadDishes() {
 
 }
 loadDishes();
-
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(clientBuildPath, 'index.html'));
-//     // res.sendFile("../client/index.html");
-// });
 
 app.get("/getdishes", async (req, res) => {
     loadDishes();
@@ -193,9 +182,6 @@ app.post("/addnewitem", upload.single("itemimage"), async (req, res) => {
 
 });
 
-
-
-
 app.post("/editolditem", upload.single("itemimage"), async (req, res) => {
     try {
         const { id, itemname, itemtype } = req.body;
@@ -227,8 +213,6 @@ app.post("/editolditem", upload.single("itemimage"), async (req, res) => {
                 [itemname, itemtype, id]
             );
         }
-
-
 
         for (let i = 0; i < itemvariant.length; i++) {
             if (typeof itemvariant[i].id === "number") {
