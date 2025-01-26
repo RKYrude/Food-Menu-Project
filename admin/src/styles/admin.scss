@@ -159,7 +159,7 @@
         }
     }
 
-    .deletion-status{
+    .deletion-status {
         z-index: 4;
         width: max-content;
         position: fixed;
@@ -227,6 +227,28 @@ header {
         border: 2px solid white;
         border-radius: 50%;
         aspect-ratio: 1;
+        position: relative;
+
+        .active-filters {
+            background-color: greenyellow;
+            height: 16px;
+            aspect-ratio: 1;
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            p {
+                color: black;
+                font-size: 15px;
+                text-align: center;
+                font-family: sans-serif;
+                font-weight: 900;
+            }
+        }
 
         button {
             background-color: transparent;
@@ -407,29 +429,51 @@ header {
                     }
 
                     @keyframes l20-1 {
-                        0% {clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%)}
+                        0% {
+                            clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%)
+                        }
 
-                        12.5% {clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%)}
+                        12.5% {
+                            clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%)
+                        }
 
-                        25% {clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%)}
+                        25% {
+                            clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%)
+                        }
 
-                        50% {clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%)}
+                        50% {
+                            clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%)
+                        }
 
-                        62.5% {clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%)}
+                        62.5% {
+                            clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%)
+                        }
 
-                        75% {clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%)}
+                        75% {
+                            clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%)
+                        }
 
-                        100% {clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%)}
+                        100% {
+                            clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%)
+                        }
                     }
 
                     @keyframes l20-2 {
-                        0% {transform: scaleY(1) rotate(0deg)}
+                        0% {
+                            transform: scaleY(1) rotate(0deg)
+                        }
 
-                        49.99% {transform: scaleY(1) rotate(135deg)}
+                        49.99% {
+                            transform: scaleY(1) rotate(135deg)
+                        }
 
-                        50% {transform: scaleY(-1) rotate(0deg)}
+                        50% {
+                            transform: scaleY(-1) rotate(0deg)
+                        }
 
-                        100% {transform: scaleY(-1) rotate(-135deg)}
+                        100% {
+                            transform: scaleY(-1) rotate(-135deg)
+                        }
                     }
                 }
             }
@@ -448,19 +492,19 @@ header {
         box-shadow: 4px 4px 3px 0px rgb(185, 184, 184);
         overflow: hidden;
 
-        .img-cont{
+        .img-cont {
             height: 70px;
             width: 160px;
             align-self: center;
             overflow: hidden;
             position: relative;
 
-            svg{
+            svg {
                 position: absolute;
                 padding: 4px;
                 height: 20px;
                 width: 20px;
-            
+
             }
 
             img {

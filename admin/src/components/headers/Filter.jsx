@@ -1,7 +1,30 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 export default function Filter(props) {
+
+    const location = useLocation();
+
+    const [selectedFilterCount, setSelectedFilterCount] = useState(0);
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        let counter = 0;
+
+        if (searchParams.has("price")) { counter++ }
+        if (searchParams.has("type")) { counter++ }
+
+        setSelectedFilterCount(counter)
+    }, [location.search])
 
     return (
         <div className="filter">
+            {
+                selectedFilterCount > 0 &&
+                <div className="active-filters">
+                    <p>{selectedFilterCount}</p>
+                </div>
+            }
             <button
                 type="button"
                 onClick={props.handleFilterClick}

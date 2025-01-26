@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-// http://localhost:5173/home?price=lowhigh&type=non-veg
-
 export default function Filter(props) {
 
     const location = useLocation();
