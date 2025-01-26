@@ -95,11 +95,11 @@ export default function Foodcards(props) {
                     props.item.itemtype === "nonveg"
                         ? {
                             border: "2px solid #7A3618",
-                            backgroundColor: "#ffe9e1"
+                            backgroundColor: "#fff5f0"
                         }
                         : {
                             border: "2px solid green",
-                            backgroundColor: "#eaffec"
+                            backgroundColor: "#f0fff4"
                         }
                 }
                 onClick={toggleShowMore}
@@ -141,7 +141,7 @@ export default function Foodcards(props) {
 
                     <div className="primaryoption ">
                         <p>{props.item.itemvariant[0].variantName} </p>
-                        <span>₹ {props.item.itemvariant[0].variantPrice}</span>
+                        <span>₹{props.item.itemvariant[0].variantPrice}</span>
                     </div>
 
                     <div className={`dropdown ${showMore ? 'active' : ''}`}>

@@ -215,6 +215,27 @@ header {
         border: 2px solid white;
         border-radius: 50%;
         aspect-ratio: 1;
+        position: relative;
+
+        .active-filters {
+            background-color: greenyellow;
+            height: 16px;
+            aspect-ratio: 1;
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            p{
+                color: black;
+                font-size: 15px;
+                text-align: center;
+                font-family: sans-serif;
+                font-weight: 900;
+            }
+        }
 
         button {
             background-color: transparent;
