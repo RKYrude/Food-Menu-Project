@@ -206,6 +206,10 @@ function Edititem() {
                 console.error("Error:", err);
                 setSubmitted(false);
                 setIsSubmitting(false);
+
+                setTimeout(() => {
+                    setSubmitted(null);
+                }, 1000);
             } 
         }
     }

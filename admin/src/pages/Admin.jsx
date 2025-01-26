@@ -18,9 +18,42 @@ function Admin() {
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
 
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [Deleted, setDeleted] = useState(null);
+
     const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("s") || "");
     const [priceOrder, setPriceOrder] = useState(new URLSearchParams(location.search).get("price") || "");
     const [foodPreference, setFoodPreference] = useState(new URLSearchParams(location.search).get("type") || "");
+
+
+    let message;
+    if (Deleted === true) {
+        message = (
+            <p
+                className="deletion-status"
+                style={{
+                    backgroundColor: "rgb(244, 255, 228)",
+                    border: "3px solid rgb(155, 241, 26)",
+                    color: "green"
+                }}
+            >
+                Dish Saved Succesfully!!
+            </p>
+        );
+    } else if (Deleted === false) {
+        message = (
+            <p
+                className="deletion-status"
+                style={{
+                    backgroundColor: "rgb(255, 228, 235)",
+                    border: "3px solid rgb(241, 26, 73)",
+                    color: "red"
+                }}
+            >
+                ERROR: Failed to Save Dish!!
+            </p>
+        );
+    }
 
 
     function handleFilterClick() {
@@ -133,7 +166,9 @@ function Admin() {
                                 id={item.id}
                                 item={item}
                                 adminpg={true}
-                                fetchData={fetchData}
+                                isDeleting={isDeleting}
+                                setIsDeleting={setIsDeleting}
+                                setDeleted={setDeleted}
                             />
                         ))
                     ) : (
@@ -168,7 +203,13 @@ function Admin() {
                         <p>Fetching Dish</p>
                     </div>
                 )}
+                
             </section>
+
+            {
+                message
+            }
+
         </div>
     );
 }

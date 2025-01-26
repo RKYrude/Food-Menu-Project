@@ -179,13 +179,17 @@ function Additem() {
 
                 setTimeout(() => {
                     setSubmitted(null);
-                    navigate(-1)
+                    navigate(-1);
                 }, 1000)
 
             } catch (err) {
                 console.error("Error:", err);
                 setSubmitted(false);
                 setIsSubmitting(false);
+
+                setTimeout(() => {
+                    setSubmitted(null);
+                }, 1000);
             } 
         }
     }

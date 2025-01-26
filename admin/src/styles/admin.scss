@@ -158,6 +158,18 @@
             }
         }
     }
+
+    .deletion-status{
+        z-index: 4;
+        width: max-content;
+        position: fixed;
+        right: 30px;
+        top: 30px;
+        padding: 10px;
+        border-radius: 10px;
+        font-family: sans-serif;
+        font-weight: 400;
+    }
 }
 
 header {
@@ -340,12 +352,12 @@ header {
                 }
             }
 
-            .butt-cont{
+            .butt-cont {
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
 
-                button{
+                button {
                     padding: 10px 40px;
                     border-radius: 100px;
                     border: none;
@@ -354,25 +366,70 @@ header {
                     font-size: 18px;
                 }
 
-                button:nth-child(1){
+                button:nth-child(1) {
                     background-color: #BDBDBD;
-                    
-                    &:hover{
+
+                    &:hover {
                         background-color: #9E9E9E;
                     }
-                    &:focus{
+
+                    &:focus {
                         background-color: #757575;
                     }
                 }
 
-                button:nth-child(2){
+                button:nth-child(2) {
                     background-color: #FF4C4C;
-                    
-                    &:hover{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    position: relative;
+
+                    &:hover {
                         background-color: #CC0000;
                     }
-                    &:focus{
+
+                    &:focus {
                         background-color: #990000;
+                    }
+
+                    /* HTML: <div class="loader"></div> */
+                    .loader-del {
+                        position: absolute;
+                        right: 7px;
+                        width: 15px;
+                        aspect-ratio: 1;
+                        border-radius: 50%;
+                        border: 4px solid white;
+                        animation:
+                            l20-1 0.8s infinite linear alternate,
+                            l20-2 1.6s infinite linear;
+                    }
+
+                    @keyframes l20-1 {
+                        0% {clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%)}
+
+                        12.5% {clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%)}
+
+                        25% {clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%)}
+
+                        50% {clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%)}
+
+                        62.5% {clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%)}
+
+                        75% {clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%)}
+
+                        100% {clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%)}
+                    }
+
+                    @keyframes l20-2 {
+                        0% {transform: scaleY(1) rotate(0deg)}
+
+                        49.99% {transform: scaleY(1) rotate(135deg)}
+
+                        50% {transform: scaleY(-1) rotate(0deg)}
+
+                        100% {transform: scaleY(-1) rotate(-135deg)}
                     }
                 }
             }
@@ -383,24 +440,36 @@ header {
     .foodcard {
         width: 320px;
         display: flex;
-        border: 2px solid #7A3618;
         border-radius: 10px;
         padding: 5px;
         gap: 10px;
-        background-color: #F2F2F2;
+        background-color: white;
         position: relative;
         box-shadow: 4px 4px 3px 0px rgb(185, 184, 184);
         overflow: hidden;
 
-        img {
+        .img-cont{
             height: 70px;
             width: 160px;
-            overflow: hidden;
-            border-radius: 7px;
             align-self: center;
-            object-fit: cover;
-        }
+            overflow: hidden;
+            position: relative;
 
+            svg{
+                position: absolute;
+                padding: 4px;
+                height: 20px;
+                width: 20px;
+            
+            }
+
+            img {
+                height: 100%;
+                width: 100%;
+                border-radius: 7px;
+                object-fit: cover;
+            }
+        }
 
 
         aside {
@@ -488,10 +557,8 @@ header {
 
             .buttcont {
                 display: flex;
-                justify-content: end;
+                justify-content: space-between;
                 gap: 10px;
-
-
 
                 .deletebutt {
                     align-self: flex-end;
@@ -499,7 +566,7 @@ header {
                     background-color: #f88b8b;
                     border: 2px solid #ff3d3d;
                     border-radius: 3px;
-                    padding: 3px 6px;
+                    padding: 3px 11px;
                     font-weight: 900;
                     font-size: 17px;
                     color: #ac0000;
@@ -517,7 +584,7 @@ header {
                     background-color: #b999ec;
                     border: 2px solid #8b46fa;
                     border-radius: 3px;
-                    padding: 3px 6px;
+                    padding: 3px 11px;
                     font-weight: 900;
                     font-size: 17px;
                     color: #5210bd;

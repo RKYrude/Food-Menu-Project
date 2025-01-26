@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-export default function Foodcards(props) {    
+export default function Foodcards(props) {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -32,18 +32,18 @@ export default function Foodcards(props) {
         let dishToEdit = props.item;
 
         navigate("/edititem", { state: dishToEdit });
-    }    
+    }
 
     async function ConfirmDelete() {
         const deletionId = props.item.id;
 
         console.log(deletionId);
 
-        try{
-            await axios.post(`${import.meta.env.VITE_API_URL}/deleteitem`, {deletionId});
+        try {
+            await axios.post(`${import.meta.env.VITE_API_URL}/deleteitem`, { deletionId });
             props.fetchData();
             setShowDelConfirm(false);
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
 
@@ -71,14 +71,41 @@ export default function Foodcards(props) {
                 <input style={{ display: "none" }} type="number" name="dishid" value={props.id} readOnly={true} />
             }
             <div className="foodcard"
-                style={
+                 style={
                     props.item.itemtype === "nonveg"
-                        ? { border: "2px solid #7A3618" }
-                        : { border: "2px solid green" }
+                        ? {
+                            border: "2px solid #7A3618",
+                            backgroundColor: "#ffe9e1"
+                        }
+                        : {
+                            border: "2px solid green",
+                            backgroundColor: "#eaffec"
+                        }
                 }
                 onClick={toggleShowMore}
             >
-                <img src={base64Image === "" ? "https://placehold.co/600x400?text=No%20Image%20\nSelected" : base64Image} alt={props.item.itemname} />
+
+                <div className="img-cont">
+                    {
+                        props.item.itemtype == "veg" ?
+                            (<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
+                                <rect x="0" y="0" width="24" height="24" fill="white" rx="7" ry="7" />
+                                <rect x="1" y="1" width="22" height="22" stroke="#4CAF50" fill="none" strokeWidth="2" rx="4" ry="4" />
+                                <circle cx="12" cy="12" r="6" fill="#4CAF50" />
+                            </svg>) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
+                                    <rect x="0" y="0" width="24" height="24" fill="white" rx="7" ry="7" />
+                                    <rect x="1" y="1" width="22" height="22" stroke="#7A3618" fill="none" strokeWidth="2" rx="4" ry="4" />
+                                    <polygon points="12,6 6,16 18,16" fill="#7A3618" />
+                                </svg>
+                            )
+                    }
+                    <img
+                        src={base64Image === "" ? "https://placehold.co/600x400?text=No%20Image%20\nSelected" : base64Image}
+                        alt={props.item.itemname}
+                    />
+                </div>
+
                 <aside>
                     <h3>{props.item.itemname}</h3>
 

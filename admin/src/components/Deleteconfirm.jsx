@@ -1,4 +1,10 @@
 export default function Deleteconfirm(props) {
+
+    function handleDeleteClick() {
+        props.setIsDeleting(true);
+        props.ConfirmDelete();
+    }
+
     return (
         <div className="del-conf" >
             <div className="DelMsg-cont">
@@ -16,8 +22,17 @@ export default function Deleteconfirm(props) {
                 </p>
 
                 <div className="butt-cont">
-                    <button onClick={props.handleDeleteClick}>Cancel</button>
-                    <button onClick={props.ConfirmDelete}>Delete</button>
+                    <button onClick={props.handleDeleteClick}
+                    disabled={props.isDeleting}>Cancel</button>
+                    <button
+                        onClick={handleDeleteClick}
+                        disabled={props.isDeleting}
+                    >
+                        <p>Delete</p>
+                        {props.isDeleting &&
+                            <div className="loader-del"></div>
+                        }
+                    </button>
                 </div>
 
             </div>
