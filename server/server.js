@@ -2,8 +2,11 @@ import express from 'express';
 import cors from "cors"
 import multer from 'multer';
 import sharp from 'sharp';
-import pg from 'pg';
 import dotenv from "dotenv"
+import session from 'express-session';
+import passport from 'passport';
+import db from "./database.js"
+import { authRouter } from './auth.js';
 
 dotenv.config();
 
@@ -14,29 +17,49 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 
-const db = new pg.Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false,
-    },
-});
-db.connect()
-    .then(() => {
-        console.log("Connected to Supabase Hosted Database successfully");
-    })
-    .catch((err) => {
-        console.error("Database Connection error", err.stack);
-    });
-
 let dishes = [];
 
-app.use(cors({
-    origin: "*",
-    methods: ["GET", "POST"],
-}));
+app.use(
+    cors({
+        origin: ["https://devfastadminpanel.onrender.com", "https://devfastview.onrender.com"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true, // Allow cookies and authentication headers
+    })
+);
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || 'your-secret-key', // Secret key for the session
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: process.env.NODE_ENV === 'production', httpOnly: true }, // Secure cookies in production
+    })
+);
+
+// Initialize Passport and session handling
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRouter);
+
+
+app.get("/admin", (req, res) => {
+    if(req.isAuthenticated()){
+        res.redirect("/admin");
+    }else{
+        res.redirect("/login");
+    }
+})
+
+
+
+
+
+
 
 async function loadDishes() {
     try {
@@ -68,7 +91,7 @@ async function loadDishes() {
             return acc;
         }, {});
 
-        dishes = Object.values(groupedData);          
+        dishes = Object.values(groupedData);
 
     } catch (err) {
         console.error(err);
@@ -79,7 +102,7 @@ loadDishes();
 
 app.get("/getdishes", async (req, res) => {
     loadDishes();
-    
+
     res.status(200).json(dishes);
 });
 
