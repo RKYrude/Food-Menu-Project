@@ -6,9 +6,6 @@ import Additem from './pages/Additem';
 import Edititem from './pages/Edititem';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import dotenv from "dotenv";
-
-dotenv.config();
 
 
 function App() {
@@ -17,12 +14,15 @@ function App() {
 
   async function getUser() {
     try {
-      const { data } = await axios.get(`${process.env.VITE_API_URL}/auth/login/success`, { withCredentials: true });
+      const { data } = await axios.get(`${import.meta.VITE_API_URL}/auth/login/success`, { withCredentials: true });
       setUser(data.user.json);
     } catch (err) {
       console.log(err);
     }
   }
+  useEffect(()=> {
+    getUser();
+  },[]);
 
   return (
     <Router>
