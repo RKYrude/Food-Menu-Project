@@ -43,4 +43,4 @@ passport.deserializeUser((user, done) => {
     done(null, user); // Deserialize by user ID (or another unique identifier)
 });
 
-export default passportSetup;
+export default passport;

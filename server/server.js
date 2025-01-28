@@ -4,11 +4,9 @@ import multer from 'multer';
 import sharp from 'sharp';
 import dotenv from "dotenv"
 import session from 'express-session';
-import passport from 'passport';
-// import db from "./database.js"
-import pg from "pg"
+import db from "./database.js"
 import { authRoute } from './routes/auth.js';
-import passportSetup from "./passport.js"
+import passport from "./passport.js";
 
 dotenv.config();
 
@@ -19,7 +17,15 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 
-let dishes = [];
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Initialize Passport and session handling
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRoute);
 
 app.use(
     cors({
@@ -28,10 +34,6 @@ app.use(
         credentials: true, // Allow cookies and authentication headers
     })
 );
-
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 app.use(
     session({
@@ -42,15 +44,8 @@ app.use(
     })
 );
 
-// Initialize Passport and session handling
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.use('/auth', authRoute);
-
-
-
-
+let dishes = [];
 async function loadDishes() {
     try {
         let response = await db.query(
@@ -87,8 +82,7 @@ async function loadDishes() {
         console.error(err);
     }
 
-}
-loadDishes();
+} loadDishes();
 
 app.get("/getdishes", async (req, res) => {
     loadDishes();
