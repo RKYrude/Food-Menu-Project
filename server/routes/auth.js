@@ -34,6 +34,6 @@ authRoute.get(
 );
 
 // Google OAuth login route
-authRouter.get("/google", passport.authenticate("google", { scope: ['profile', 'email'] }));
+authRoute.get("/google", passport.authenticate("google", { scope: ['profile', 'email'] }));
 
 export { authRoute };
