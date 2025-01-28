@@ -7,7 +7,7 @@ import session from 'express-session';
 import passport from 'passport';
 // import db from "./database.js"
 import pg from "pg"
-import { authRoute } from './auth.js';
+import { authRoute } from './routes/auth.js';
 import passportSetup from "./passport.js"
 
 dotenv.config();
