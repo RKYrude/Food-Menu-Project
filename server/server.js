@@ -7,7 +7,7 @@ import session from 'express-session';
 import passport from 'passport';
 // import db from "./database.js"
 import pg from "pg"
-import { authRouter } from './auth.js';
+import { authRoute } from './auth.js';
 import passportSetup from "./passport.js"
 
 dotenv.config();
@@ -23,7 +23,7 @@ let dishes = [];
 
 app.use(
     cors({
-        origin: ["https://devfastadminpanel.onrender.com", "https://devfastview.onrender.com"],
+        origin: [process.env.FRONTEND_ADMIN_URL, process.env.FRONTEND_CLIENT_URL],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true, // Allow cookies and authentication headers
     })
@@ -46,7 +46,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRouter);
+app.use('/auth', authRoute);
 
 
 

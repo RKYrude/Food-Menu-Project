@@ -1,10 +1,8 @@
 import "../styles/login.scss/"
-import {Navigate } from 'react-router-dom';
 
 function Login() {
-    const navigate = Navigate();
     function handleLogin(){
-        navigate(`${import.meta.VITE_API_URL}/auth/google/admin`);
+        window.location.href = `${import.meta.VITE_API_URL}/auth/google/admin`;
     }
 
     return (
