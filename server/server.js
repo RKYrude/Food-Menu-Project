@@ -3,7 +3,7 @@ import cors from "cors"
 import multer from 'multer';
 import sharp from 'sharp';
 import dotenv from "dotenv"
-import session from 'express-session';
+import cookieSession from "cookie-session"
 import db from "./database.js"
 import { authRoute } from './routes/auth.js';
 import passport from "./passport.js";
@@ -36,11 +36,10 @@ app.use(
 );
 
 app.use(
-    session({
-        secret: process.env.SESSION_SECRET || 'your-secret-key', // Secret key for the session
-        resave: false,
-        saveUninitialized: true,
-        cookie: { secure: process.env.NODE_ENV === 'production', httpOnly: true }, // Secure cookies in production
+    cookieSession({
+        name: "session",
+        keys: [process.env.SESSION_KEY],
+        maxAge: 100*60*60*24*7,
     })
 );
 
