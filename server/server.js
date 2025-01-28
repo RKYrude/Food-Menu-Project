@@ -17,6 +17,14 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 
+app.use(
+    cookieSession({
+        name: "session",
+        keys: [process.env.SESSION_KEY],
+        maxAge: 1000*60*60*24*7,
+    })
+);
+ 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,13 +43,6 @@ app.use(
     })
 );
 
-app.use(
-    cookieSession({
-        name: "session",
-        keys: [process.env.SESSION_KEY],
-        maxAge: 1000*60*60*24*7,
-    })
-);
 
 
 let dishes = [];
