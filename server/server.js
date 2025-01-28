@@ -7,6 +7,7 @@ import session from 'express-session';
 import passport from 'passport';
 import db from "./database.js"
 import { authRouter } from './auth.js';
+import passportSetup from "./passport.js"
 
 dotenv.config();
 
@@ -46,14 +47,6 @@ app.use(passport.session());
 
 app.use('/auth', authRouter);
 
-
-app.get("/admin", (req, res) => {
-    if(req.isAuthenticated()){
-        res.redirect("/admin");
-    }else{
-        res.redirect("/login");
-    }
-})
 
 
 

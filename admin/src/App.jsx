@@ -1,19 +1,37 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Additem from './pages/Additem';
 import Edititem from './pages/Edititem';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import dotenv from "dotenv";
+
+dotenv.config();
+
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  async function getUser() {
+    try {
+      const { data } = await axios.get(`${process.env.VITE_API_URL}/auth/login/success`, { withCredentials: true });
+      setUser(data.user.json);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/admin" element={<Admin />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/additem" element={<Additem />} />
-        <Route path="/edititem" element={<Edititem />} />
+        <Route path="/admin" element={user ? <Admin /> : <Navigate to="/login" />} />
+        <Route path="/additem" element={user ? <Additem /> : <Navigate to="/login" />} />
+        <Route path="/edititem" element={user ? <Edititem /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
