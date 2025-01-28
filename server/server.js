@@ -5,7 +5,8 @@ import sharp from 'sharp';
 import dotenv from "dotenv"
 import session from 'express-session';
 import passport from 'passport';
-import db from "./database.js"
+// import db from "./database.js"
+import pg from "pg"
 import { authRouter } from './auth.js';
 import passportSetup from "./passport.js"
 
@@ -49,7 +50,20 @@ app.use('/auth', authRouter);
 
 
 
+const db = new pg.Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
 
+db.connect()
+    .then(() => {
+        console.log("Connected to Supabase Hosted Database successfully");
+    })
+    .catch((err) => {
+        console.error("Database Connection error", err.stack);
+    });
 
 
 
