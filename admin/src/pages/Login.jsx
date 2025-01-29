@@ -1,9 +1,22 @@
 import "../styles/login.scss/"
+import { useEffect } from "react";
 
 function Login() {
-    function handleLogin(){
+    function handleLogin() {
         window.location.href = `${import.meta.env.VITE_API_URL}/auth/google/admin`;
     }
+
+    useEffect(() => {
+        axios.get(`${import.meta.env.VITE_API_URL}/auth/login/success`, {
+            withCredentials: true, // 🔥 Allows cookies to be sent
+        })
+            .then(response => {
+                setUser(response.data.user); // Set user if authenticated
+            })
+            .catch(error => {
+                console.error("Error fetching login status:", error);
+            });
+    }, []);
 
     return (
         <div className="loginPage">

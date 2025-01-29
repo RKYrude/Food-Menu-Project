@@ -21,8 +21,12 @@ app.use(
         name: "session",
         keys: [process.env.SESSION_KEY],
         maxAge: 1000*60*60*24*7,
+        secure: true, // Ensures cookies are only sent over HTTPS
+        sameSite: "none", // Allows cross-site cookies
     })
 );
+app.set("trust proxy", 1);
+
  
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,10 +39,11 @@ app.use('/auth', authRoute);
 
 app.use(
     cors({
-        // origin: [process.env.FRONTEND_ADMIN_URL, process.env.FRONTEND_CLIENT_URL],
-        origin: ["*"],
+        origin: [process.env.FRONTEND_ADMIN_URL, process.env.FRONTEND_CLIENT_URL],
+        // origin: ["*"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true, // Allow cookies and authentication headers
+        allowedHeaders: []
     })
 );
 

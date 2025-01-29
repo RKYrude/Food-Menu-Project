@@ -24,13 +24,11 @@ authRoute.get('/login/success', (req, res) => {
 
 // Google OAuth callback route
 authRoute.get(
-    '/google/admin',
+    '/google/callback',
     passport.authenticate('google', {
+        successRedirect: `${process.env.FRONTEND_ADMIN_URL}/admin`,
         failureRedirect: `${process.env.FRONTEND_ADMIN_URL}/login`,
-    }),
-    (req, res) => {
-        res.redirect(`${process.env.FRONTEND_ADMIN_URL}/admin`);
-    }
+    })
 );
 
 // Google OAuth login route

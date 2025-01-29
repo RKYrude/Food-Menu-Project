@@ -1,5 +1,5 @@
-import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import passport from "passport";
 import dotenv from "dotenv";
 import db from "./database.js";
 
@@ -10,7 +10,7 @@ passport.use(
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: "/auth/google/admin",
+            callbackURL: "https://food-menu-project.onrender.com/auth/google/callback",
             scope: ["profile", "email"],
             userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
         },
