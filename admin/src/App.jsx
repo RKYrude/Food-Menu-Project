@@ -14,7 +14,7 @@ function App() {
 
   async function getUser() {
     try {
-      const { data } = await axios.get(`${import.meta.VITE_API_URL}/auth/login/success`, { withCredentials: true });
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { withCredentials: true });
       setUser(data.user.json);
     } catch (err) {
       console.log(err);

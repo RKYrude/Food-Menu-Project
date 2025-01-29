@@ -16,7 +16,6 @@ const PORT = process.env.PORT;
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-
 app.use(
     cookieSession({
         name: "session",
@@ -25,7 +24,6 @@ app.use(
     })
 );
  
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
