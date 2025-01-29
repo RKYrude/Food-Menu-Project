@@ -35,7 +35,8 @@ app.use('/auth', authRoute);
 
 app.use(
     cors({
-        origin: [process.env.FRONTEND_ADMIN_URL, process.env.FRONTEND_CLIENT_URL],
+        // origin: [process.env.FRONTEND_ADMIN_URL, process.env.FRONTEND_CLIENT_URL],
+        origin: ["*"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true, // Allow cookies and authentication headers
     })
