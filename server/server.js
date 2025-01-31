@@ -4,7 +4,6 @@ import multer from 'multer';
 import sharp from 'sharp';
 import dotenv from "dotenv"
 import session from 'express-session';
-import cookieSession from 'cookie-session';
 import db from "./database.js"
 import authRoute from "./routes/auth.js"
 import passport from 'passport';
@@ -21,22 +20,18 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(
-//     session({
-//         secret: process.env.SESSION_KEY,
-//         resave: false,
-//         saveUninitialized: false,
-//         cookie: {
-//             secure: true,
-//             maxAge: 1000 * 60 * 60 * 24 * 7,
-//         },
-//     })
-// );
+app.use(
+    session({
+        secret: process.env.SESSION_KEY,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: true,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+        },
+    })
+);
 
-app.use(cookieSession({
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    keys: [process.env.SESSION_KEY],
-}))
 
 app.use(
     cors({
