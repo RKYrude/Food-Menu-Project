@@ -17,12 +17,8 @@ function App() {
             const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login`, { withCredentials: true });
 
             if (response.data.user) {
-                console.log("use found");
-                
                 setUser(true)
-            }else{
-                console.log("user NOT found");
-                
+            }else{              
                 setUser(false);
             }
         } catch (err) {
