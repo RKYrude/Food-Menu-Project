@@ -4,6 +4,7 @@ import multer from 'multer';
 import sharp from 'sharp';
 import dotenv from "dotenv"
 import session from 'express-session';
+import cookieSession from 'cookie-session';
 import db from "./database.js"
 import authRoute from "./routes/auth.js"
 import passport from 'passport';
@@ -17,28 +18,25 @@ const PORT = process.env.PORT;
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-app.use(
-    session({
-        secret: process.env.SESSION_KEY,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            secure: true,
-            sameSite: "None",
-            maxAge: 1000 * 60 * 60 * 24 * 7,
-        },
-    })
-);
-
-app.use('/auth', authRoute);
-app.options('*', cors());
- 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Initialize Passport and session handling
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(
+//     session({
+//         secret: process.env.SESSION_KEY,
+//         resave: false,
+//         saveUninitialized: false,
+//         cookie: {
+//             secure: true,
+//             maxAge: 1000 * 60 * 60 * 24 * 7,
+//         },
+//     })
+// );
+
+app.use(cookieSession({
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    keys: [process.env.SESSION_KEY],
+}))
 
 app.use(
     cors({
@@ -47,7 +45,15 @@ app.use(
         credentials: true, // Allow cookies and authentication headers
     })
 );
-app.options('*', cors())
+app.options('*', cors());
+
+
+// Initialize Passport and session handling
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRoute);
+
 
 
 let dishes = [];
