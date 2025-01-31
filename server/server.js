@@ -31,7 +31,7 @@ app.use(
         cookie: {
             secure: true,  // Ensures cookies are sent only over HTTPS (Render uses HTTPS)
             httpOnly: true,  // Prevents client-side JavaScript access
-            // sameSite: "none",  // Allows cross-origin cookies (important for frontend-backend)
+            sameSite: "None",  // Allows cross-origin cookies (important for frontend-backend)
             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
         },
     })
