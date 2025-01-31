@@ -40,6 +40,8 @@ passport.use(
 
 
 passport.serializeUser((user, done) => {
+    console.log("serialise: ",user);  //logs
+    
     done(null, user.id);
 });
 
@@ -56,6 +58,7 @@ passport.deserializeUser(async (id, done) => {
         if (result.rows.length > 0) {
             done(null, result.rows[0]);
         } else {
+            console.log("deserialise: ",user);  //logs
             done(new Error('User not found'), null);
         }
     } catch (err) {
