@@ -26,6 +26,10 @@ function Login() {
         if (searchParams.has("error")) {
             setError(true);
         }
+
+        setTimeout(()=>{
+            setError(false)
+        }, 5000);;
     }, [searchParams]);
 
     async function handleLogin(e) {
