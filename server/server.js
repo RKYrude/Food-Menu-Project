@@ -5,7 +5,7 @@ import sharp from 'sharp';
 import dotenv from "dotenv"
 import session from 'express-session';
 import db from "./database.js"
-import { authRoute } from './routes/auth.js';
+import authRoute from "./routes/auth.js"
 import passport from 'passport';
 import "./passport.js";
 

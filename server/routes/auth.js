@@ -36,4 +36,4 @@ authRoute.get('/google/callback', passport.authenticate('google', {
 });
 
 
-export default authRoute
+export default authRoute;
