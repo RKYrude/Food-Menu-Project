@@ -10,31 +10,39 @@ import axios from 'axios';
 
 function App() {
 
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-  async function getUser() {
-    try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { withCredentials: true });
-      setUser(data.user.json);
-    } catch (err) {
-      console.log(err);
+    async function checkLogin() {
+        try {
+            const response = await axios.get(`http://localhost:3000/auth/login`, { withCredentials: true });
+
+            if (response.data.user) {
+                setUser(true)
+            }else{
+                setUser(false);
+            }
+        } catch (err) {
+            console.log(err);
+            setUser(false);
+        }
     }
-  }
-  useEffect(()=> {
-    getUser();
-  },[]);
+    useEffect(() => {
+        checkLogin();
+    }, [])
 
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={user ? <Admin /> : <Navigate to="/login" />} />
-        <Route path="/additem" element={user ? <Additem /> : <Navigate to="/login" />} />
-        <Route path="/edititem" element={user ? <Edititem /> : <Navigate to="/login" />} />
-      </Routes>
-    </Router>
-  );
+    if (user != null) {
+        return (
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/admin" element={user ? <Admin /> : <Navigate to="/login" />} />
+                    <Route path="/additem" element={user ? <Additem /> : <Navigate to="/login" />} />
+                    <Route path="/edititem" element={user ? <Edititem /> : <Navigate to="/login" />} />
+                </Routes>
+            </Router>
+        );
+    }
 }
 
 export default App;

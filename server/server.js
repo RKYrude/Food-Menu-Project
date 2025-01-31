@@ -3,10 +3,11 @@ import cors from "cors"
 import multer from 'multer';
 import sharp from 'sharp';
 import dotenv from "dotenv"
-import cookieSession from "cookie-session"
+import session from 'express-session';
 import db from "./database.js"
 import { authRoute } from './routes/auth.js';
-import passport from "./passport.js";
+import passport from 'passport';
+import "./passport.js";
 
 dotenv.config();
 
@@ -17,15 +18,16 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 app.use(
-    cookieSession({
-        name: "session",
-        keys: [process.env.SESSION_KEY],
-        maxAge: 1000*60*60*24*7,
-        secure: true, // Ensures cookies are only sent over HTTPS
-        sameSite: "none", // Allows cross-site cookies
+    session({
+        secret: process.env.SESSION_KEY,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: true,
+            maxAge: 5000,
+        },
     })
 );
-app.set("trust proxy", 1);
 
  
 app.use(express.json());
@@ -36,14 +38,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', authRoute);
+app.options('*', cors());
+
 
 app.use(
     cors({
         origin: [process.env.FRONTEND_ADMIN_URL, process.env.FRONTEND_CLIENT_URL],
-        // origin: ["*"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true, // Allow cookies and authentication headers
-        allowedHeaders: []
     })
 );
 

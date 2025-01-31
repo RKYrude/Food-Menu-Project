@@ -253,21 +253,22 @@
             background-color: #468f06;
             color: white;
         }
+
         &:disabled {
             background-color: #75FF00;
             color: #77ac49;
-    
+
             svg {
                 animation: rotate 1s ease-in-out infinite;
-                box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.45);
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45);
             }
-            
+
             border-radius: 20px 9px 9px 20px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.45) inset;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45) inset;
         }
     }
 
-    .submition-status{
+    .submition-status {
         width: max-content;
         position: fixed;
         right: 30px;
@@ -284,6 +285,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }

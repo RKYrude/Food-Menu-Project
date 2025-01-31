@@ -6,32 +6,34 @@ dotenv.config();
 
 const authRoute = Router();
 
-
-authRoute.get('/login/success', (req, res) => {
-
-    if(req.user){
+authRoute.get("/login", (req, res) => {
+    if (req.user) {
         res.status(200).json({
-            message: "Logged in successfully",
-            user: req.user
+            user: req.user,
         })
-    }else{
-        res.status(403).json({
-            message: "Not authorised"
+    } else {
+        res.json({
+            user: null,
         });
+
     }
+})
+
+
+// Google OAuth login route (consent screen)
+authRoute.get("/google", passport.authenticate("google", {
+    scope: ['profile', 'email']
+}));
+
+// Google OAuth callback route
+authRoute.get('/google/callback', passport.authenticate('google', {
+    failureRedirect: `${process.env.FRONTEND_ADMIN_URL}/login?error=unauthorized`,
+}), (req, res) => {
+    if (req.user) {
+        res.redirect(`${process.env.FRONTEND_ADMIN_URL}/admin`);
+    }
+
 });
 
 
-// Google OAuth callback route
-authRoute.get(
-    '/google/callback',
-    passport.authenticate('google', {
-        successRedirect: `${process.env.FRONTEND_ADMIN_URL}/admin`,
-        failureRedirect: `${process.env.FRONTEND_ADMIN_URL}/login`,
-    })
-);
-
-// Google OAuth login route
-authRoute.get("/google", passport.authenticate("google", { scope: ['profile', 'email'] }));
-
-export { authRoute };
+export default authRoute
