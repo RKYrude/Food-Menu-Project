@@ -14,7 +14,7 @@ function App() {
 
     async function checkLogin() {
         try {
-            const response = await axios.get(`http://localhost:3000/auth/login`, { withCredentials: true });
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login`, { withCredentials: true });
 
             if (response.data.user) {
                 setUser(true)

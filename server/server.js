@@ -24,11 +24,14 @@ app.use(
         saveUninitialized: false,
         cookie: {
             secure: true,
-            maxAge: 5000,
+            sameSite: "None",
+            maxAge: 1000 * 60 * 60 * 24 * 7,
         },
     })
 );
 
+app.use('/auth', authRoute);
+app.options('*', cors());
  
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,10 +40,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRoute);
-app.options('*', cors());
-
-
 app.use(
     cors({
         origin: [process.env.FRONTEND_ADMIN_URL, process.env.FRONTEND_CLIENT_URL],
@@ -48,7 +47,7 @@ app.use(
         credentials: true, // Allow cookies and authentication headers
     })
 );
-
+app.options('*', cors())
 
 
 let dishes = [];
