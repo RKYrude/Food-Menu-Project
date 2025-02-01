@@ -34,8 +34,7 @@ function Login() {
 
     async function handleLogin(e) {
         e.preventDefault();
-        // window.location.href = `${import.meta.env.VITE_API_URL}/auth/google?prompt=select_account`;z
-        window.open(`${import.meta.env.VITE_API_URL}/auth/google`, "_blank", "width=500,height=600");
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
     }
 
     return (
