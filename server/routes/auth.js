@@ -27,7 +27,7 @@ authRoute.get("/google", passport.authenticate("google", {
 
 // Google OAuth callback route
 authRoute.get('/google/callback', passport.authenticate('google', {
-    failureRedirect: `${process.env.FRONTEND_ADMIN_URL}/login?error=${req.email}`,
+    failureRedirect: `${process.env.FRONTEND_ADMIN_URL}/login?error=unauthorized`,
 }), (req, res) => {
     if (req.user) {
         console.log(req.user);
