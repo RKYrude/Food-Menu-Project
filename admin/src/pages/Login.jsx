@@ -17,7 +17,7 @@ function Login() {
                     color: "red"
                 }}
             >
-                User Not Found! Try other Gmail account.
+                No user with email {searchParams.get("error")}.
             </p>
         );
     }
