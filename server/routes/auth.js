@@ -30,11 +30,9 @@ authRoute.get('/google/callback', passport.authenticate('google', {
     failureRedirect: `${process.env.FRONTEND_ADMIN_URL}/login?error=unauthorized`,
 }), (req, res) => {
     if (req.user) {
-        console.log(req.user);
-        
         res.redirect(`${process.env.FRONTEND_ADMIN_URL}/admin`);
     }else{
-        res.redirect(`${process.env.FRONTEND_ADMIN_URL}/login?error=${req.query.email}`)
+        res.redirect(`${process.env.FRONTEND_ADMIN_URL}/login?error=${req.user.email}`)
     }
 
 });
