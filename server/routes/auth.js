@@ -26,12 +26,15 @@ authRoute.get("/google", passport.authenticate("google", {
 }));
 
 // Google OAuth callback route
-authRoute.get('/google/callback', passport.authenticate('google'), (req, res) => {
+authRoute.get('/google/callback', passport.authenticate('google', {
+    failureRedirect: `${process.env.FRONTEND_ADMIN_URL}/login?error=${req.email}`,
+}), (req, res) => {
     if (req.user) {
         console.log(req.user);
+        
         res.redirect(`${process.env.FRONTEND_ADMIN_URL}/admin`);
-    } else {
-        res.redirect(`${process.env.FRONTEND_ADMIN_URL}/login?error=${req.user.admin_email}`);
+    }else{
+        res.redirect(`${process.env.FRONTEND_ADMIN_URL}/login?error=${req.query.email}`)
     }
 
 });
