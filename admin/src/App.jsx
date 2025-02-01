@@ -6,29 +6,30 @@ import Additem from './pages/Additem';
 import Edititem from './pages/Edititem';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Authenticationloader from './components/Authenticationloader';
 
 
 function App() {
 
     const [user, setUser] = useState(null);
 
-    async function checkLogin() {
-        try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login`, { withCredentials: true });
+    // async function checkLogin() {
+    //     try {
+    //         const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login`, { withCredentials: true });
 
-            if (response.data.user) {
-                setUser(true)
-            }else{              
-                setUser(false);
-            }
-        } catch (err) {
-            console.log(err);
-            setUser(false);
-        }
-    }
-    useEffect(() => {
-        checkLogin();
-    }, [])
+    //         if (response.data.user) {
+    //             setUser(true)
+    //         } else {
+    //             setUser(false);
+    //         }
+    //     } catch (err) {
+    //         console.log(err);
+    //         setUser(false);
+    //     }
+    // }
+    // useEffect(() => {
+    //     checkLogin();
+    // }, []);
 
     if (user != null) {
         return (
@@ -42,6 +43,10 @@ function App() {
                 </Routes>
             </Router>
         );
+    } else {
+        return (
+            <Authenticationloader />
+        )
     }
 }
 
