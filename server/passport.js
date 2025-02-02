@@ -1,7 +1,8 @@
-import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import dotenv from "dotenv";
-import db from "./database.js";
+import passport from 'passport';
+import jwt from 'jsonwebtoken'
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import dotenv from 'dotenv';
+import db from './database.js';
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ passport.use(
     },
         async (accessToken, refreshToken, profile, done) => {
             const email = profile.emails[0].value;
-
+        
             try {
                 const result = await db.query(
                     "SELECT * FROM admin_users WHERE admin_email = $1",
@@ -24,8 +25,9 @@ passport.use(
                 );
 
                 if (result.rows.length > 0) {
-
-                    return done(null, result.rows[0]);
+                    const token = jwt.sign(profile._json, process.env.JWT_SECRET, {expiresIn: '7d'});
+                    
+                    return done(null, { user: result.rows[0], token });
                 } else {
                     return done(null, false, { message: "User Not Found" });
                 }
@@ -36,28 +38,3 @@ passport.use(
         }
     )
 );
-
-
-
-passport.serializeUser((user, done) => {    
-    done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-    try {
-
-        const result = await db.query(
-            "SELECT * FROM admin_users WHERE id = $1",
-            [id]
-        );
-
-        if (result.rows.length > 0) {
-            done(null, result.rows[0]);
-        } else {
-            done(new Error('User not found'), null);
-        }
-    } catch (err) {
-        done(err);
-    }
-});
-

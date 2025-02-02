@@ -3,11 +3,11 @@ import cors from "cors"
 import multer from 'multer';
 import sharp from 'sharp';
 import dotenv from "dotenv"
-import session from 'express-session';
 import db from "./database.js"
 import authRoute from "./routes/auth.js"
 import passport from 'passport';
 import "./passport.js";
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -19,23 +19,24 @@ const upload = multer({ storage });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
-app.use(
-    session({
-        secret: process.env.SESSION_KEY,
-        resave: false,
-        saveUninitialized: false,
-        proxy: true, // Trust reverse proxy (needed for Render)
-        cookie: {
-            secure: true,  // Ensures cookies are sent only over HTTPS (Render uses HTTPS)
-            httpOnly: true,  // Prevents client-side JavaScript access
-            sameSite: "None",  // Allows cross-origin cookies (important for frontend-backend)
-            maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-        },
-    })
-);
+// app.use(
+//     session({
+//         secret: process.env.SESSION_KEY,
+//         resave: false,
+//         saveUninitialized: false,
+//         // proxy: true, // Trust reverse proxy (needed for Render)
+//         cookie: {
+//             // secure: true,  // Ensures cookies are sent only over HTTPS (Render uses HTTPS)
+//             httpOnly: true,  // Prevents client-side JavaScript access
+//             // sameSite: "None",  // Allows cross-origin cookies (important for frontend-backend)
+//             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+//         },
+//     })
+// );
 
 
 app.use(
@@ -50,7 +51,7 @@ app.options('*', cors());
 
 // Initialize Passport and session handling
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 app.use('/auth', authRoute);
 

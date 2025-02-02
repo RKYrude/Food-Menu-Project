@@ -13,17 +13,17 @@ function App() {
 
     const [user, setUser] = useState(null);
 
+    const [error, setError] = useState(false);
+
     async function checkLogin() {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login`, { withCredentials: true });
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login`, { withCredentials: true });            
 
-            if (response.data.user) {
-                setUser(true)
-            } else {
-                setUser(false);
-            }
+            setUser(response.data.user ? response.data.user : false);
+
         } catch (err) {
-            console.log(err);
+            console.log(err.response.data.message);
+            setError(err.response.data.message);
             setUser(false);
         }
     }
@@ -36,8 +36,8 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={<Landing />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/admin" element={user ? <Admin /> : <Navigate to="/login" />} />
+                    <Route path="/login" element={<Login err={error}/>} />
+                    <Route path="/admin" element={user ? <Admin user={user}/> : <Navigate to="/login" />} />
                     <Route path="/additem" element={user ? <Additem /> : <Navigate to="/login" />} />
                     <Route path="/edititem" element={user ? <Edititem /> : <Navigate to="/login" />} />
                 </Routes>

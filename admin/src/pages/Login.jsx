@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import "../styles/login.scss/";
 
-function Login() {
+function Login(props) {
     const [searchParams] = useSearchParams();
     const [error, setError] = useState(false);
+    // cos
 
     let message;
     if (error) {
@@ -17,14 +18,16 @@ function Login() {
                     color: "red"
                 }}
             >
-                No user with email {searchParams.get("error")}.
+                {error}
             </p>
         );
     }
 
     useEffect(() => {
         if (searchParams.has("error")) {
-            setError(true);
+            setError('User Not Found! Try other Gmail account.');
+        }else if (props.err){
+            setError(props.err);
         }
 
         setTimeout(()=>{
