@@ -51,7 +51,6 @@ app.options('*', cors());
 
 // Initialize Passport and session handling
 app.use(passport.initialize());
-// app.use(passport.session());
 
 app.use('/auth', authRoute);
 
