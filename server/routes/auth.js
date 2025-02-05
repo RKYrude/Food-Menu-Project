@@ -48,7 +48,7 @@ authRoute.get('/google/callback', passport.authenticate('google', {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-            partitioned: true,
+            // partitioned: true,
             maxAge: 1000 * 60 * 60 * 24 * 7,
         });
 
