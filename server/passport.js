@@ -17,7 +17,7 @@ passport.use(
     },
         async (accessToken, refreshToken, profile, done) => {
             const email = profile.emails[0].value;
-            
+
             try {
                 const result = await db.query(
                     "SELECT * FROM admin_users WHERE admin_email = $1",
@@ -25,12 +25,22 @@ passport.use(
                 );
 
                 if (result.rows.length > 0) {
-                    const token = jwt.sign(profile._json, process.env.JWT_SECRET, {expiresIn: '7d'});
-                    
+
+                    const token = jwt.sign(
+                        {
+                            given_name: profile._json.given_name,
+                            family_name: profile._json.family_name,
+                            picture: profile._json.picture,
+                            email: profile._json.email,
+                        },
+                        process.env.JWT_SECRET,
+                        { expiresIn: '7d' }
+                    );
+
                     return done(null, { user: result.rows[0], token });
                 } else {
                     return done(null, false);
-                    
+
                 }
             } catch (err) {
                 console.error('Error fetching user from database :- ', err);
