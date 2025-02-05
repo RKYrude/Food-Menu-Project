@@ -17,7 +17,7 @@ passport.use(
     },
         async (accessToken, refreshToken, profile, done) => {
             const email = profile.emails[0].value;
-        
+            
             try {
                 const result = await db.query(
                     "SELECT * FROM admin_users WHERE admin_email = $1",
@@ -29,7 +29,8 @@ passport.use(
                     
                     return done(null, { user: result.rows[0], token });
                 } else {
-                    return done(null, false, { message: "User Not Found" });
+                    return done(null, false);
+                    
                 }
             } catch (err) {
                 console.error('Error fetching user from database :- ', err);

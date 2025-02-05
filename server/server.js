@@ -21,24 +21,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// app.set("trust proxy", 1);
-
-// app.use(
-//     session({
-//         secret: process.env.SESSION_KEY,
-//         resave: false,
-//         saveUninitialized: false,
-//         // proxy: true, // Trust reverse proxy (needed for Render)
-//         cookie: {
-//             // secure: true,  // Ensures cookies are sent only over HTTPS (Render uses HTTPS)
-//             httpOnly: true,  // Prevents client-side JavaScript access
-//             // sameSite: "None",  // Allows cross-origin cookies (important for frontend-backend)
-//             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-//         },
-//     })
-// );
-
-
 app.use(
     cors({
         origin: [process.env.FRONTEND_ADMIN_URL, process.env.FRONTEND_CLIENT_URL],

@@ -45,9 +45,11 @@ authRoute.get('/google/callback', passport.authenticate('google', {
     if (req.user) {
         const { token } = req.user
         res.cookie('token', token, {
-            httpOnly: false,
+            // httpOnly: true,
             secure: true,
-            sameSite: 'none'
+            sameSite: 'None',
+            partitioned: true,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
         });
 
         res.redirect(`${process.env.FRONTEND_ADMIN_URL}/admin`);
