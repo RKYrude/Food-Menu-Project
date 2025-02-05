@@ -45,7 +45,7 @@ authRoute.get('/google/callback', passport.authenticate('google', {
     if (req.user) {
         const { token } = req.user
         res.cookie('token', token, {
-            // httpOnly: true,
+            httpOnly: true,
             secure: true,
             sameSite: 'None',
             partitioned: true,
