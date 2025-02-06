@@ -15,7 +15,7 @@ function App() {
 
     const [error, setError] = useState(false);
 
-    async function checkLogin() {
+    async function checkAuthenticated() {
         try {
             const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login`, { withCredentials: true });            
 
@@ -28,7 +28,7 @@ function App() {
         }
     }
     useEffect(() => {
-        checkLogin();
+        checkAuthenticated();
     }, []);
 
     if (user != null) {
