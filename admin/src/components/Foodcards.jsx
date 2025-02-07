@@ -25,7 +25,7 @@ export default function Foodcards(props) {
 
     function handleDeleteClick(event) {
         event.stopPropagation();
-        setShowDelConfirm(!showDelConfirm);
+        setShowDelConfirm(true);
     }
 
     function handleEditDishClick(event) {
@@ -40,18 +40,24 @@ export default function Foodcards(props) {
 
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/deleteitem`, { deletionId });
-            navigate(0);
 
             console.log('Item Deletd');
+
 
         } catch (err) {
             console.log(`Failed to delete item :- `, err);
             props.setDeleted(false);
-            props.setIsDeleting(false);
 
             setTimeout(() => {
                 props.setDeleted(null);
             }, 1000);
+        } finally {
+            setTimeout(() => {
+                props.fetchData();
+                props.setIsDeleting(false);
+                setShowDelConfirm(false)
+            }, 600);
+
         }
 
     }

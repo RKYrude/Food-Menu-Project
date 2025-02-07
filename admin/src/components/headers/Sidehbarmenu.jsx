@@ -2,7 +2,7 @@ import axios from "axios"
 
 export default function Sidebarmenu(props) {
 
-    
+
 
     async function handleDownload() {
         try {
@@ -74,6 +74,11 @@ export default function Sidebarmenu(props) {
                         </svg>
                     </button>
 
+                </section>
+
+                <section className="credits">
+                    <p>Designed By <span>Niha Das</span></p>
+                    <p>Developed By <span>Sourashish Das</span></p>
                 </section>
             </div>
         </div>

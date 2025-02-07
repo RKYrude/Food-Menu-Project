@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-
 export default function Sidebar(props) {
     return (
         <div className="sidebar" onClick={props.handleSidebarClick}>
