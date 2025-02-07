@@ -61,7 +61,7 @@ authRoute.get('/google/callback', passport.authenticate('google', {
         res.cookie('token', token, {
             httpOnly: true,
             secure: true,
-            // sameSite: 'None',
+            sameSite: 'None',
             maxAge: 1000 * 60 * 60 * 24 * 7,
         });
 
