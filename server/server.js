@@ -8,11 +8,16 @@ import authRoute from "./routes/auth.js"
 import passport from 'passport';
 import "./passport.js";
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -76,6 +81,11 @@ async function loadDishes() {
     }
 
 } loadDishes();
+
+app.get("/download/:filename", (req, res)=>{
+    const filePath = path.join(__dirname, 'uploads', req.params.filename);
+    res.download(filePath);
+})
 
 app.get("/getdishes", async (req, res) => {
     loadDishes();

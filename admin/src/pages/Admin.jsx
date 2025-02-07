@@ -6,17 +6,22 @@ import Filtermenu from "../components/headers/Filtermenu";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Sidebar from "../components/headers/Sidebar";
+// import Sidebarmenu from "../components/headers/Sidebarmenu";
+import Sidebarmenu from "../components/headers/Sidehbarmenu";
 
-function Admin() {
+function Admin(props) {
 
     const navigate = useNavigate();
     const location = useLocation();
 
     const [filterOpen, setFilterOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [dishes, setDishes] = useState([])
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
+    const [queryTrigger, setQueryTrigger] = useState(0);
 
     const [isDeleting, setIsDeleting] = useState(false);
     const [Deleted, setDeleted] = useState(null);
@@ -59,6 +64,9 @@ function Admin() {
     function handleFilterClick() {
         setFilterOpen(!filterOpen);
     }
+    function handleSidebarClick() {
+        setSidebarOpen(!sidebarOpen);
+    }
 
     function handleFilterClear() {
         handleFilterClick();
@@ -86,8 +94,8 @@ function Admin() {
         if (foodPreference) URLparams.append("type", foodPreference);
 
         setLoading(true);
-
         navigate(`?${URLparams.toString()}`);
+        setQueryTrigger((prev) => prev + 1);
     }
 
 
@@ -116,8 +124,8 @@ function Admin() {
         }
     }
     useEffect(() => {
-        fetchData();        
-    }, [location.search]);
+        fetchData();
+    }, [location.search, queryTrigger]);
 
 
     return (
@@ -126,7 +134,17 @@ function Admin() {
             <header>
                 <form action="/search" className="head" onSubmit={handleSearchSubmit}>
 
-                    {/* submit buttons inside SearchBar and Filter */}
+                    <Sidebar
+                        handleSidebarClick={handleSidebarClick}
+                        picture={props.user.picture}
+                    />
+                    {sidebarOpen &&
+                        <Sidebarmenu
+                            handleSidebarClick={handleSidebarClick}
+                            user={props.user}
+                        />
+                    }
+
                     <SearchBar
                         setDishes={setDishes}
                         handleChange={handleChange}
@@ -144,6 +162,7 @@ function Admin() {
                             handleFilterClear={handleFilterClear}
                         />
                     }
+
                 </form>
 
                 <section className="greeting">
@@ -203,7 +222,7 @@ function Admin() {
                         <p>Fetching Dish</p>
                     </div>
                 )}
-                
+
             </section>
 
             {

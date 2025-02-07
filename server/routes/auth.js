@@ -31,6 +31,20 @@ authRoute.get("/login", (req, res) => {
     }
 });
 
+authRoute.get('/logout', async (req, res) => {
+    try {
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None'
+        }); // Remove token cookie from browser
+
+        return res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        console.error("Logout error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
 
 // Google OAuth login route (consent screen)
 authRoute.get("/google", passport.authenticate("google", {
@@ -47,7 +61,7 @@ authRoute.get('/google/callback', passport.authenticate('google', {
         res.cookie('token', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'None',
+            // sameSite: 'None',
             maxAge: 1000 * 60 * 60 * 24 * 7,
         });
 
