@@ -14,32 +14,61 @@
         left: 0;
         height: 100%;
         width: 100%;
-        background-color: black;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0);
         z-index: 3;
+        transition: background-color 0.15s ease-in-out;
+        display: flex;
+        align-items: flex-end;
+        /* Pushes .filteroptions to the bottom */
+        pointer-events: none;
+        /* Prevents interaction when hidden */
+
+
+        &.active {
+            background-color: rgba(0, 0, 0, 0.8);
+            pointer-events: auto;
+            /* Enable interaction when active */
+
+            .filteroptions {
+                transform: translateY(0);
+                /* Moves up smoothly */
+            }
+
+            .xcircle {
+                position: absolute;
+                top: -21%;
+                left: 50%;
+                transform: translate(-50%);
+                height: 100px;
+                border: 1px solid black;
+                height: 40px;
+                border-radius: 50%;
+
+                &:hover {
+                    background-color: red;
+                }
+            }
+        }
 
         .xcircle {
             position: absolute;
-            top: -21%;
+            top: 0%;
             left: 50%;
             transform: translate(-50%);
-            height: 100px;
-            border: 1px solid black;
-            height: 40px;
+            height: 0px;
             border-radius: 50%;
         }
 
         .filteroptions {
-            // height: 330px;
             width: 100%;
             background-color: #8319BC;
-            position: fixed;
-            bottom: 0px;
-            z-index: 2;
             border-radius: 30px 30px 0px 0px;
             padding: 18px;
             box-sizing: border-box;
             font-family: sans-serif;
+            transform: translateY(100%);
+            /* Start hidden below */
+            transition: transform 0.15s ease-in-out;
 
             h2 {
                 color: white;
@@ -181,6 +210,7 @@ header {
             height: 40px;
             padding: 0px 20px;
             border: none;
+            outline: none;
             border-radius: 100px;
             background-color: transparent;
             box-sizing: border-box;
@@ -189,6 +219,7 @@ header {
             font-weight: 400;
             font-size: 15px;
 
+            &:hover,
             &:focus {
                 background-color: #641191;
             }
@@ -206,6 +237,12 @@ header {
 
             svg {
                 margin-top: 3px;
+            }
+
+            &:hover,
+            &:focus {
+                background-color: #641191;
+                border-radius: 50%;
             }
         }
     }
@@ -228,8 +265,8 @@ header {
             display: flex;
             justify-content: center;
             align-items: center;
-            
-            p{
+
+            p {
                 color: black;
                 font-size: 15px;
                 text-align: center;
@@ -245,9 +282,12 @@ header {
             width: 100%;
             padding-top: 3px;
 
+            &:hover,
             &:focus {
                 background-color: #641191;
                 border-radius: 50%;
+                box-shadow: 0px 0px 9px 4px rgba(255, 255, 255, 0.45);
+
             }
         }
     }

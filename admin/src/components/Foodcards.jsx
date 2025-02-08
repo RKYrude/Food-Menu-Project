@@ -25,7 +25,7 @@ export default function Foodcards(props) {
 
     function handleDeleteClick(event) {
         event.stopPropagation();
-        setShowDelConfirm(true);
+        setShowDelConfirm(!showDelConfirm);
     }
 
     function handleEditDishClick(event) {

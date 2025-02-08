@@ -17,6 +17,7 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
+    const [queryTrigger, setQueryTrigger] = useState(0);
 
     const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("s") || "");
     const [priceOrder, setPriceOrder] = useState(new URLSearchParams(location.search).get("price") || "");
@@ -53,8 +54,8 @@ function Home() {
         if (foodPreference) URLparams.append("type", foodPreference);
 
         setLoading(true);
-
         navigate(`?${URLparams.toString()}`);
+        setQueryTrigger((prev) => prev + 1);    
     }
 
     async function fetchData() {
@@ -67,7 +68,7 @@ function Home() {
         } else {
             apiURL = `${import.meta.env.VITE_API_URL}/getdishes`;
         }
-        
+
         try {
             const response = await axios.get(apiURL);
             const dishes = response.data;
@@ -83,7 +84,7 @@ function Home() {
     }
     useEffect(() => {
         fetchData();
-    }, [location.search]);
+    }, [location.search, queryTrigger]);
 
 
     return (
@@ -100,15 +101,14 @@ function Home() {
                     <Filter
                         handleFilterClick={handleFilterClick}
                     />
-                    {filterOpen &&
-                        <Filtermenu
-                            handleFilterClick={handleFilterClick}
-                            handleChange={handleChange}
-                            priceOrder={priceOrder}
-                            foodPreference={foodPreference}
-                            handleFilterClear={handleFilterClear}
-                        />
-                    }
+                    <Filtermenu
+                        handleFilterClick={handleFilterClick}
+                        handleChange={handleChange}
+                        priceOrder={priceOrder}
+                        foodPreference={foodPreference}
+                        handleFilterClear={handleFilterClear}
+                        filterOpen={filterOpen}
+                    />
                 </form>
 
                 <section className="greeting">

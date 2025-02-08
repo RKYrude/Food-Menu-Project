@@ -138,30 +138,29 @@ function Admin(props) {
                         handleSidebarClick={handleSidebarClick}
                         picture={props.user.picture}
                     />
-                    {sidebarOpen &&
-                        <Sidebarmenu
-                            handleSidebarClick={handleSidebarClick}
-                            user={props.user}
-                        />
-                    }
+                    <Sidebarmenu
+                        handleSidebarClick={handleSidebarClick}
+                        user={props.user}
+                        sidebarOpen={sidebarOpen}
+                    />
 
                     <SearchBar
                         setDishes={setDishes}
                         handleChange={handleChange}
                         searchQuery={searchQuery}
                     />
+
                     <Filter
                         handleFilterClick={handleFilterClick}
                     />
-                    {filterOpen &&
-                        <Filtermenu
-                            handleFilterClick={handleFilterClick}
-                            handleChange={handleChange}
-                            priceOrder={priceOrder}
-                            foodPreference={foodPreference}
-                            handleFilterClear={handleFilterClear}
-                        />
-                    }
+                    <Filtermenu
+                        handleFilterClick={handleFilterClick}
+                        handleChange={handleChange}
+                        priceOrder={priceOrder}
+                        foodPreference={foodPreference}
+                        handleFilterClear={handleFilterClear}
+                        filterOpen={filterOpen}
+                    />
 
                 </form>
 

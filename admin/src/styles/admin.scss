@@ -10,21 +10,31 @@
     flex-direction: column;
 
     .sidebarmenubackground {
-
         position: fixed;
         top: 0;
         left: 0;
         height: 100%;
-        width: 100%;
-        background-color: black;
-        background-color: rgba(0, 0, 0, 0.8);
+        width: 0px;
+        background-color: rgba(0, 0, 0, 0);
         z-index: 3;
+        transition: background-color 0.15s ease-in-out;
+
+        &.active {
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 100vw;
+            z-index: 3;
+
+            .sidebarmenu {
+                transform: translateX(0);
+            }
+        }
 
         .sidebarmenu {
             height: 100%;
+            width: max-content;
             background-color: #8319BC;
             position: fixed;
-            left: 0px;
+            left: 0;
             z-index: 2;
             border-radius: 0px 10px 10px 0px;
             padding: 50px 18px 10px;
@@ -33,6 +43,10 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            transition: transform 0.15s ease-in-out;
+            transform: translateX(-100%);
+            /* Initially hidden */
+
 
             .sidebarcloseButt {
                 position: absolute;
@@ -127,7 +141,7 @@
                 font-weight: 00;
                 font-style: normal;
 
-                span{
+                span {
                     font-family: sans-serif;
                     font-weight: bold;
                     font-size: 17px;
@@ -147,32 +161,61 @@
         left: 0;
         height: 100%;
         width: 100%;
-        background-color: black;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0);
         z-index: 3;
+        transition: background-color 0.15s ease-in-out;
+        display: flex;
+        align-items: flex-end;
+        /* Pushes .filteroptions to the bottom */
+        pointer-events: none;
+        /* Prevents interaction when hidden */
+
+
+        &.active {
+            background-color: rgba(0, 0, 0, 0.8);
+            pointer-events: auto;
+            /* Enable interaction when active */
+
+            .filteroptions {
+                transform: translateY(0);
+                /* Moves up smoothly */
+            }
+
+            .xcircle {
+                position: absolute;
+                top: -21%;
+                left: 50%;
+                transform: translate(-50%);
+                height: 100px;
+                border: 1px solid black;
+                height: 40px;
+                border-radius: 50%;
+
+                &:hover {
+                    background-color: red;
+                }
+            }
+        }
 
         .xcircle {
             position: absolute;
-            top: -21%;
+            top: 0%;
             left: 50%;
             transform: translate(-50%);
-            height: 100px;
-            border: 1px solid black;
-            height: 40px;
+            height: 0px;
             border-radius: 50%;
         }
 
         .filteroptions {
-            // height: 330px;
             width: 100%;
             background-color: #8319BC;
-            position: fixed;
-            bottom: 0px;
-            z-index: 2;
             border-radius: 30px 30px 0px 0px;
             padding: 18px;
             box-sizing: border-box;
             font-family: sans-serif;
+            transform: translateY(100%);
+            /* Start hidden below */
+            transition: transform 0.15s ease-in-out;
 
             h2 {
                 color: white;

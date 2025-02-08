@@ -36,7 +36,7 @@ export default function Sidebarmenu(props) {
     }
 
     return (
-        <div className="sidebarmenubackground" onClick={props.handleSidebarClick} onScroll={props.handleSidebarClick}>
+        <div className={`sidebarmenubackground ${props.sidebarOpen ? `active` : ''}`} onClick={props.handleSidebarClick}>
 
             <div className="sidebarmenu"
                 onClick={(e) => e.stopPropagation()}
@@ -57,7 +57,7 @@ export default function Sidebarmenu(props) {
 
                 <section className="sidebarmenuMid">
                     <button type="button" onClick={handleDownload}>
-                        Download QR menu Image
+                        QR menu Image
                     </button>
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="white" className="bi bi-download" viewBox="0 0 16 16">
                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />

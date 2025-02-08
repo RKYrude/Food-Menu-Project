@@ -3,7 +3,7 @@ export default function Filtermenu(props) {
 
 
     return (
-        <div className="filteroptionbackground" onClick={props.handleFilterClick}>
+        <div className={`filteroptionbackground ${props.filterOpen ? `active` : ''}`} onClick={props.handleFilterClick}>
 
             <div className="filteroptions"
                 onClick={(e) => e.stopPropagation()}

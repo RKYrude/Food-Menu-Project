@@ -22,8 +22,12 @@ export default function Deleteconfirm(props) {
                 </p>
 
                 <div className="butt-cont">
-                    <button onClick={props.handleDeleteClick}
-                    disabled={props.isDeleting}>Cancel</button>
+                    <button
+                        onClick={props.handleDeleteClick}
+                        disabled={props.isDeleting}
+                    >
+                        Cancel
+                    </button>
                     <button
                         onClick={handleDeleteClick}
                         disabled={props.isDeleting}
