@@ -4,6 +4,7 @@
 * {
     padding: 0px;
     margin: 0%;
+    user-select: none;
 }
 
 @font-face {
@@ -13,7 +14,7 @@
     font-style: normal;
 }
 
-body{
+body {
     background: linear-gradient(130deg, #E7CAE8, #F0FFF8);
 }
 
@@ -44,7 +45,8 @@ body{
 
     h1 {
         font-size: 4vw;
-        text-shadow: 2px 1px 0px rgba(131, 25, 188, 0.3);
+        // text-shadow: 2px 1px 0px rgba(131, 25, 188, 0.3);
+        text-shadow: 2px 1px 0px rgba(100, 188, 25, 1);
         color: #8319BC;
         font-family: sans-serif;
         font-weight: 900;
@@ -70,6 +72,8 @@ body{
         position: absolute;
         left: 50%;
         transform: translate(-50%);
+        // text-shadow: 2px 1px 20px rgba(0, 0, 0, 0.4);
+        text-shadow: 2px 1px 20px rgba(131, 25, 188, 0.4);
     }
 
     img {
@@ -96,8 +100,8 @@ body{
 
     .credits {
         position: absolute;
-        bottom: 5px;
-        left: 5px;
+        bottom: 10px;
+        left: 10px;
 
         p {
             font-size: 15px;

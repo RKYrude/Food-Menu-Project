@@ -4,6 +4,7 @@
 * {
     padding: 0px;
     margin: 0%;
+    user-select: none;
 }
 
 @font-face {
@@ -70,6 +71,7 @@ body{
         position: absolute;
         left: 50%;
         transform: translate(-50%);
+        text-shadow: 2px 1px 20px rgba(0, 0, 0, 0.4);
     }
 
     img {
@@ -96,8 +98,8 @@ body{
 
     .credits {
         position: absolute;
-        bottom: 5px;
-        left: 5px;
+        bottom: 10px;
+        left: 10px;
 
         p {
             font-size: 15px;
