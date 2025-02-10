@@ -7,7 +7,7 @@ export default function Sidebarmenu(props) {
     async function handleDownload() {
         try {
             // const response = await axios.get('https://devfood-server.onrender.com/download/food_landing.png', {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/download/food_landing.png`, {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/download/MenuQR.png`, {
                 responseType: 'blob' //getting in binary
             });
 

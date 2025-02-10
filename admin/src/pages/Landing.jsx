@@ -13,6 +13,8 @@ function Landing() {
 
   return (
     <div className="main">
+      <img src="/images/1.png" alt="" />
+      <img src="/images/2.png" alt="" />
       <header>
         <h1>Dev Fast Food</h1>
         <h3>Scan. Choose. Savor.</h3>
