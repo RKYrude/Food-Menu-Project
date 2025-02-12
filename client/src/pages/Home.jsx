@@ -53,12 +53,14 @@ function Home() {
         if (searchQuery) URLparams.append("s", searchQuery.trim());
         if (priceOrder) URLparams.append("price", priceOrder);
         if (foodPreference) URLparams.append("type", foodPreference);
+        
+        navigate(`?${URLparams.toString()}`);
 
         if (prevSearchRef.current != location.search) {
             setLoading(true);
+            navigate(`?${URLparams.toString()}`);
         }
 
-        navigate(`?${URLparams.toString()}`);
     }
 
     async function fetchData() {
@@ -86,8 +88,8 @@ function Home() {
         }
     }
     useEffect(() => {
-        fetchData();
         prevSearchRef.current = location.search;
+        fetchData();
     }, [location.search]);
 
 
