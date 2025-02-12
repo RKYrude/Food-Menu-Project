@@ -53,12 +53,14 @@ function Home() {
         if (searchQuery) URLparams.append("s", searchQuery.trim());
         if (priceOrder) URLparams.append("price", priceOrder);
         if (foodPreference) URLparams.append("type", foodPreference);
-        
-        setLoading(true);
-        navigate(`?${URLparams.toString()}`);
+
+
 
         if (prevSearchRef.current == location.search) {
             fetchData();
+        } else {
+            setLoading(true);
+            navigate(`?${URLparams.toString()}`);
         }
 
     }
