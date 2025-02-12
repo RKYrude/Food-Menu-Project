@@ -65,13 +65,13 @@ function Home() {
             
         } 
 
+        console.log('locadingg', loading);
     }
 
     async function fetchData() {
 
         console.log("fetchData");
         
-
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
 
@@ -97,7 +97,7 @@ function Home() {
     useEffect(() => {
         prevSearchRef.current = location.search;
         fetchData();
-    }, [location.search, queryTrigger]);
+    }, [location.search]);
 
 
 
