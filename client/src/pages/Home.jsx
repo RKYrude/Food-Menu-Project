@@ -3,7 +3,7 @@ import SearchBar from "../components/headers/Searchbar";
 import Filter from "../components/headers/Filter";
 import Foodcards from "../components/Foodcards";
 import Filtermenu from "../components/headers/Filtermenu";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -17,6 +17,8 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
+    const prevSearchRef = useRef(location.search);
+
 
     const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("s") || "");
     const [priceOrder, setPriceOrder] = useState(new URLSearchParams(location.search).get("price") || "");
@@ -52,7 +54,10 @@ function Home() {
         if (priceOrder) URLparams.append("price", priceOrder);
         if (foodPreference) URLparams.append("type", foodPreference);
 
-        setLoading(true);
+        if (prevSearchRef.current != location.search) {
+            setLoading(true);
+        }
+
         navigate(`?${URLparams.toString()}`);
     }
 
@@ -82,6 +87,7 @@ function Home() {
     }
     useEffect(() => {
         fetchData();
+        prevSearchRef.current = location.search;
     }, [location.search]);
 
 
