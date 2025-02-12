@@ -17,7 +17,6 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
-    const [queryTrigger, setQueryTrigger] = useState(0);
 
     const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("s") || "");
     const [priceOrder, setPriceOrder] = useState(new URLSearchParams(location.search).get("price") || "");
@@ -55,14 +54,11 @@ function Home() {
 
         setLoading(true);
         navigate(`?${URLparams.toString()}`);
-        setQueryTrigger((prev) => prev + 1);    
+        fetchData();
     }
 
     async function fetchData() {
-
-        console.log("fetch called");
         
-
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
 
@@ -87,7 +83,8 @@ function Home() {
     }
     useEffect(() => {
         fetchData();
-    }, [location.search, queryTrigger]);
+    }, [location.search]);
+
 
 
     return (
