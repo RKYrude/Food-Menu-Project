@@ -17,9 +17,7 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
-    const [queryTrigger, setQueryTrigger] = useState(0);
     const prevSearchRef = useRef(location.search);
-    const [prevURL, setPrevURL] = useState(null);
 
 
     const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("s") || "");
@@ -49,8 +47,6 @@ function Home() {
     async function handleSearchSubmit(event) {
         event.preventDefault();
 
-        setPrevURL(window.location.href);
-
         setFilterOpen(false);
 
         const URLparams = new URLSearchParams();
@@ -58,22 +54,18 @@ function Home() {
         if (priceOrder) URLparams.append("price", priceOrder);
         if (foodPreference) URLparams.append("type", foodPreference);
 
-        setLoading(true);
+        
         navigate(`?${URLparams.toString()}`);
-
-        console.log(prevURL);
-        console.log(window.location.href);
         
-        
-        if (prevURL == window.location.href || prevURL == null) {
-            console.log('same');
-            setLoading(false);  
-        } 
-
-        console.log('locadingg', loading);
+        if (prevSearchRef.current === location.search) {
+            console.log('same');    
+            fetchData();        
+        }         
     }
 
     async function fetchData() {
+
+        setLoading(true);
 
         console.log("fetchData");
         
