@@ -19,6 +19,7 @@ function Home() {
     const [errMsg, setErrmsg] = useState("");
     const [queryTrigger, setQueryTrigger] = useState(0);
     const prevSearchRef = useRef(location.search);
+    const [prevURL, setPrevURL] = useState(null);
 
 
     const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("s") || "");
@@ -48,6 +49,8 @@ function Home() {
     async function handleSearchSubmit(event) {
         event.preventDefault();
 
+        setPrevURL(window.location.href);
+
         setFilterOpen(false);
 
         const URLparams = new URLSearchParams();
@@ -57,12 +60,14 @@ function Home() {
 
         setLoading(true);
         navigate(`?${URLparams.toString()}`);
+
+        console.log(prevURL);
+        console.log(window.location.href);
         
-        if (prevSearchRef.current === location.search) {
-            // setQueryTrigger((prev) => prev + 1);
+        
+        if (prevURL == window.location.href || prevURL == null) {
             console.log('same');
-            setLoading(false);
-            
+            setLoading(false);  
         } 
 
         console.log('locadingg', loading);
