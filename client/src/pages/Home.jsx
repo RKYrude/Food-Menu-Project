@@ -17,6 +17,7 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
+    const [queryTrigger, setQueryTrigger] = useState(0);
     const prevSearchRef = useRef(location.search);
 
 
@@ -58,8 +59,8 @@ function Home() {
         navigate(`?${URLparams.toString()}`);
         
         if (prevSearchRef.current == location.search) {
-            fetchData();
-        }
+            setQueryTrigger((prev) => prev + 1);
+        } 
 
     }
 
@@ -90,7 +91,7 @@ function Home() {
     useEffect(() => {
         prevSearchRef.current = location.search;
         fetchData();
-    }, [location.search]);
+    }, [location.search, queryTrigger]);
 
 
 
