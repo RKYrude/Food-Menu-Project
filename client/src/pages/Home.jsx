@@ -58,13 +58,19 @@ function Home() {
         setLoading(true);
         navigate(`?${URLparams.toString()}`);
         
-        // if (prevSearchRef.current == location.search) {
-        //     setQueryTrigger((prev) => prev + 1);
-        // } 
+        if (prevSearchRef.current === location.search) {
+            // setQueryTrigger((prev) => prev + 1);
+            console.log('same');
+            setLoading(false);
+            
+        } 
 
     }
 
     async function fetchData() {
+
+        console.log("fetchData");
+        
 
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
