@@ -53,8 +53,13 @@ function Home() {
         if (foodPreference) URLparams.append("type", foodPreference);
 
         setLoading(true);
-        navigate(`?${URLparams.toString()}`);
-        setTimeout(() => fetchData(), 0);
+        try{
+            navigate(`?${URLparams.toString()}`);
+        }catch(err){
+            console.log(err);
+        }finally{
+            fetchData();
+        }
     }
 
     async function fetchData() {
