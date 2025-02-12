@@ -58,9 +58,9 @@ function Home() {
         setLoading(true);
         navigate(`?${URLparams.toString()}`);
         
-        if (prevSearchRef.current == location.search) {
-            setQueryTrigger((prev) => prev + 1);
-        } 
+        // if (prevSearchRef.current == location.search) {
+        //     setQueryTrigger((prev) => prev + 1);
+        // } 
 
     }
 
