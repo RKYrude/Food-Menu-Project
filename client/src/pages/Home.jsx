@@ -60,6 +60,9 @@ function Home() {
 
     async function fetchData() {
 
+        console.log("fetch called");
+        
+
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
 
