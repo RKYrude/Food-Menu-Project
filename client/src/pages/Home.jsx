@@ -54,11 +54,11 @@ function Home() {
 
         setLoading(true);
         navigate(`?${URLparams.toString()}`);
-        fetchData();
+        setTimeout(() => fetchData(), 0);
     }
 
     async function fetchData() {
-        
+
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
 
