@@ -53,9 +53,8 @@ function Home() {
         if (priceOrder) URLparams.append("price", priceOrder);
         if (foodPreference) URLparams.append("type", foodPreference);
 
-        searchQuery.trim() == '' 
-        ? navigate(`?`) 
-        : navigate(`?${URLparams.toString()}`);
+ 
+        navigate(`?${URLparams.toString()}`);
         
     }
 
