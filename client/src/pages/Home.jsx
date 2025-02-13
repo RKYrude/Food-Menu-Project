@@ -59,7 +59,7 @@ function Home() {
     async function fetchData() {
 
         setLoading(true);
-        
+
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
 
@@ -78,9 +78,9 @@ function Home() {
             setErrmsg(err.message)
             setError(true)
         }
-        finally {
-            setLoading(false);
-        }
+        
+        setLoading(false);
+
     }
     useEffect(() => {
         fetchData();
