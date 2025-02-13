@@ -94,11 +94,10 @@ function Admin(props) {
         navigate(`?${URLparams.toString()}`);
     }
 
-
     async function fetchData() {
 
         setLoading(true);
-
+        
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
 
