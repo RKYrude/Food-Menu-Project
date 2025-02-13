@@ -54,7 +54,7 @@ function Home() {
         if (foodPreference) URLparams.append("type", foodPreference);
 
         searchQuery.trim() == '' 
-        ? navigate(`/home`) 
+        ? navigate(`?`) 
         : navigate(`?${URLparams.toString()}`);
         
     }
