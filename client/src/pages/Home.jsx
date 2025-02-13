@@ -17,7 +17,6 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
-    const prevSearchRef = useRef(location.search);
 
 
     const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("s") || "");
@@ -56,11 +55,7 @@ function Home() {
 
         
         navigate(`?${URLparams.toString()}`);
-        
-        if (prevSearchRef.current === location.search) {
-            console.log('same');    
-            fetchData();        
-        }         
+               
     }
 
     async function fetchData() {
@@ -92,7 +87,6 @@ function Home() {
         }
     }
     useEffect(() => {
-        prevSearchRef.current = location.search;
         fetchData();
     }, [location.search]);
 
