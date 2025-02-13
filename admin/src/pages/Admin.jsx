@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../components/headers/Sidebar";
-// import Sidebarmenu from "../components/headers/Sidebarmenu";
 import Sidebarmenu from "../components/headers/Sidehbarmenu";
 
 function Admin(props) {
@@ -21,7 +20,6 @@ function Admin(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errMsg, setErrmsg] = useState("");
-    const [queryTrigger, setQueryTrigger] = useState(0);
 
     const [isDeleting, setIsDeleting] = useState(false);
     const [Deleted, setDeleted] = useState(null);
@@ -93,13 +91,13 @@ function Admin(props) {
         if (priceOrder) URLparams.append("price", priceOrder);
         if (foodPreference) URLparams.append("type", foodPreference);
 
-        setLoading(true);
         navigate(`?${URLparams.toString()}`);
-        setQueryTrigger((prev) => prev + 1);
     }
 
 
     async function fetchData() {
+
+        setLoading(true);
 
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
@@ -125,7 +123,7 @@ function Admin(props) {
     }
     useEffect(() => {
         fetchData();
-    }, [location.search, queryTrigger]);
+    }, [location.search]);
 
 
     return (

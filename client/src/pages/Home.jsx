@@ -3,7 +3,7 @@ import SearchBar from "../components/headers/Searchbar";
 import Filter from "../components/headers/Filter";
 import Foodcards from "../components/Foodcards";
 import Filtermenu from "../components/headers/Filtermenu";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -53,16 +53,12 @@ function Home() {
         if (priceOrder) URLparams.append("price", priceOrder);
         if (foodPreference) URLparams.append("type", foodPreference);
 
- 
         navigate(`?${URLparams.toString()}`);
-        
     }
 
     async function fetchData() {
 
         setLoading(true);
-
-        console.log("fetchData");
         
         const apiParams = new URLSearchParams(location.search);
         let apiURL = "";
